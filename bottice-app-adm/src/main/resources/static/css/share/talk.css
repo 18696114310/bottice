@@ -1,0 +1,102 @@
+
+.siton{}
+.siton .img_box{
+	padding-bottom: 0.1rem;
+}
+.siton .img_box img{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+.siton .text_content{
+	padding: 0.2rem 0.3rem;
+}
+.siton .text_content h2{
+	color: #555;
+	font-size: 0.32rem;
+	line-height: 0.6rem;
+	text-align: center;
+	font-weight: bold;
+}
+.siton .text_content ul{
+	padding-top: 0.3rem;
+}
+
+.siton .text_content li{
+	height: 0.84rem;
+}
+.siton .text_content li span{
+	float: right;
+	padding-top: 0.22rem;
+}
+.siton .text_content li b{
+	display: block;
+	float: left;
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 100%;
+	background: #d8d8d8;
+	margin-left: 0.08rem;
+}
+.siton .text_content li b.on{
+	background: #df5d49;
+}
+.siton .text_content li p{
+	height: 0.84rem;
+	line-height: 0.84rem;
+	color: #9c9c9c;
+}
+.siton .text_content li i{
+	display: inline-block;
+	width: 0.4rem;
+	height: 0.4rem;
+	vertical-align: text-top;
+	margin-right: 0.1rem;
+}
+.siton .text_content li.time i{
+	background: url(/img/time.png) no-repeat center;
+	background-size: 0.4rem auto;
+}
+.siton .text_content li.address i{
+	background: url(/img/address.png) no-repeat center;
+	background-size: 0.4rem auto;
+}
+.siton .text_content li.num i{
+	background: url(/img/num.png) no-repeat center;
+	background-size: 0.4rem auto;
+}
+
+.detail_box{
+	padding: 1.2rem 0;
+}
+.detail_box .title{
+	font-size: 0.28rem;
+	text-align: center;
+	color: #e57766;
+	padding-bottom: 0.3rem;
+}
+.detail_box .detail{
+	font-size: 0.24rem;
+	line-height: 0.56rem;
+	color: #969696;
+}
+
+.bm_btn{
+	position: fixed;
+	bottom: 0.6rem;
+	left: 50%;
+	width: 2.9rem;
+	height: 0.8rem;
+	background: #df5d49;
+	border-radius: 0.08rem;
+	color: #fff;
+	margin-left: -1.45rem;
+}
+.bm_btn a{
+	display: block;
+	color: #fff;
+	line-height: 0.8rem;
+	text-align: center;
+	font-size: 0.36rem;
+}
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>用户列表</title>
+    <script src="/common/css.js"></script>
+</head>
+<body>
+<div id="rrapp" class="content" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn" style="overflow: hidden;">
+            <div class="form-group col-xs-3" style="padding-left: 1px;">
+                <div class="input-group">
+                    <span class="input-group-addon">账户</span>
+                    <input type="text" class="form-control" v-model="q.account" @keyup.enter="query" placeholder="登录账户">
+                </div>
+            </div>
+
+            <div class="form-group col-xs-4" style="padding-left: 1px;">
+                <div class="input-group">
+                    <span class="input-group-addon">时间</span>
+                    <input type="text" class="form-control" id="filterTime" readonly>
+                    <span class="input-group-addon" title="清除" style="cursor:pointer" @click="trash">
+						<i class="fa fa-trash-o bigger-110"></i>
+					</span>
+                </div>
+            </div>
+
+            <a v-if="hasPermission('base:userlogin:list')" class="btn btn-default" @click="query"><i class="fa fa-search"></i>&nbsp;查询</a>
+            <a v-if="hasPermission('base:userlogin:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+    </div>
+</div>
+<script src="/common/js.js"></script>
+<script type="text/javascript">
+    dynamicLoading.js(rootPath + "plugins/createPage/jquery.page.js", "utf-8");
+    dynamicLoading.js(rootPath + "js/user/show.js", "utf-8");
+</script>
+</body>
+</html>

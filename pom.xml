@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bottice</groupId>
+    <artifactId>bottice-app</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+	
+	<parent>
+        <groupId>com.fresh</groupId>
+        <artifactId>fresh</artifactId>
+        <version>1.0.0.RELEASE</version>
+    </parent>
+    
+    <!--bottice 亨鲜科技框架-->
+    <modules>
+    	<!--bottice 用户-->
+        <module>bottice-app-user</module>
+    	<!--bottice 接口-->
+        <module>bottice-app-api</module>
+    	<!--bottice 接口-->
+        <module>bottice-app-adm</module>
+    </modules>
+    
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+		  <groupId>com.github.binarywang</groupId>
+		  <artifactId>weixin-java-miniapp</artifactId>
+		  <version>3.0.0</version>
+		</dependency>
+    </dependencies>
+	
+	<!-- 仓库地址 -->
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus Repository</name>
+			<url>http://nexus.renwubang.cn/repository/maven-public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+  
+	<!-- 插件地址 -->
+  	<pluginRepositories>
+      	<pluginRepository>
+          	<id>nexus</id>
+          	<name>Nexus Repository</name>
+          	<url>http://nexus.renwubang.cn/repository/maven-public/</url>
+          	<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+      	</pluginRepository>
+  	</pluginRepositories>
+</project>

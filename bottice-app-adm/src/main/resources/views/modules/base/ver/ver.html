@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>系统版本</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  	<script src="/common/css.js"></script>
+  	<script src="/common/uploader.js"></script>
+</head>
+<body>
+<div id="rrapp" class="content" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-xs-3" style="padding-left: 1px;">
+				<div class="input-group">
+					<span class="input-group-addon">系统类型</span>
+					<select class="form-control" v-model="q.type" placeholder="系统类型">
+					    <option value="">请选择系统类型</option>
+					  	<option v-for="option in oss" v-bind:value="option.value">{{ option.label }}</option>  
+					</select>  
+				</div>
+			</div>
+		
+			<div class="form-group col-xs-4" style="padding-left: 1px;">
+				<div class="input-group">
+					<span class="input-group-addon">时间</span>
+					<input type="text" class="form-control" id="filterTime" readonly>
+					<span class="input-group-addon" title="清除" style="cursor:pointer" @click="trash">
+						<i class="fa fa-trash-o bigger-110"></i>
+					</span>
+				</div>
+			</div>
+		
+			<a v-if="hasPermission('base:ver:list')" class="btn btn-default" @click="query"><i class="fa fa-search"></i>&nbsp;查询</a>
+			<a v-if="hasPermission('base:ver:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('base:ver:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('base:ver:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+	<div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal" role="form" style="width:90%; min-width: 600px;">
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">版本号</div>
+			   	<div class="col-sm-10">
+			      	<input type="text" class="form-control" v-model="dto.appVer" placeholder="版本号：同一软件下的版本"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">内部编号</div>
+			   	<div class="col-sm-10">
+			      	<input type="text" class="form-control" v-model="dto.appNo" placeholder="内部编号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">系统类型</div>
+			   	<div class="col-sm-10">
+			      	<label class="radio-inline" v-for="os in oss">
+					  	<input type="radio" name="os" v-bind:value="os.value" v-model="dto.os"/> {{ os.label }}
+					</label>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">系统版本</div>
+			   	<div class="col-sm-10">
+			      	<input type="text" class="form-control" v-model="dto.osVer" placeholder="系统版本：4、5、6等"/>
+			    </div>
+			</div>
+			<!-- <div class="form-group">
+			   	<div class="col-sm-2 control-label">强制更新</div>
+			   	<div class="col-sm-10">
+					<label class="radio-inline">
+					  	<input type="radio" name="isForce" value="1" v-model="dto.isForce"/> 是
+					</label>
+			   		<label class="radio-inline">
+					  	<input type="radio" name="isForce" value="0" v-model="dto.isForce"/> 否
+					</label>
+			    </div>
+			</div> -->
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">软件包</div>
+			    <div class="col-sm-7" style="padding-left: 0px;padding-right:6px;">
+			      	<input type="hidden" class="form-control" v-model="dto.url"/>
+			      	<input type="text" class="form-control" id="package" placeholder="上传安装包"/>
+			    	<div style="color: red">说明：IOS版本需要先将安装包发布到蒲公英，然后输入蒲公英的下载地址</div>
+			    </div>
+			    <div class="col-sm-1" style="padding-left: 0px;padding-right:0px;">
+					<span id="packageSpan"></span>
+				</div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">更新说明</div>
+			   	<div class="col-sm-10">
+			   		<textarea class="form-control" rows="6" v-model="dto.remark" placeholder="备注：更新说明" style="resize: none;"></textarea>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="/common/js.js"></script>
+<script src="/common/uploadify.js"></script>
+<script type="text/javascript">
+	dynamicLoading.js(rootPath + "js/modules/base/ver/show.js", "utf-8");
+	$(document).ready(function() 
+	{
+		var up = $('#packageSpan').Huploadify({
+			auto:true,
+			fileTypeExts:'*.apk;*.ipa;*.pxl;*.deb;*.sis;*.sisx;*.xap;*.png',
+			multi:false,
+			method:'post',
+			fileObjName:'file',
+			fileSizeLimit:512000,  //512000 500M
+			breakPoints:false,
+			saveInfoLocal:false,
+			showUploadedPercent:false,//是否实时显示上传的百分比，如20%
+			showUploadedSize:false,
+			removeTimeout:9999999,
+			buttonCursor: 'hand',
+			buttonText:'上传',
+		    height: '21',  
+			uploader:baseURL + 'sys/oss/upload?token=' + token, //新闻详情大图
+			onUploadStart:function(){
+				NProgress.start();
+				//up.settings('formData', {aaaaa:'1111111',bb:'2222'});
+				//up.Huploadify('settings','formData', {aaaaa:'1111111',bb:'2222'});
+			},
+			onUploadSuccess:function(file, data)
+			{
+				NProgress.done();
+				NProgress.remove();
+				var r = JSON.parse(data);
+				if(r.code == 0)
+				{
+					$("#package").val(r.url);
+					vm.dto['url'] = r.url;
+	            }
+				else
+				{
+	                alert(r.msg);
+	            }
+				
+				return true;
+			},
+		});
+	});
+</script>
+</body>
+</html>

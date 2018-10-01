@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<configuration>  
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+  	<shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+	<!-- ===================================================== -->
+	<!-- Service Config -->
+	<!-- ===================================================== -->
+  	<property name="SERVICE_LOG_PATTERN"
+              value="%-16X{traceId} %-12X{clientId:--} %-16X{method} %-25logger{0} %msg"/>
+  
+    <!-- 开发测试环境 -->
+    <springProfile name="test,dev">
+        <!-- 每天产生一个文件 -->
+        <appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>${log.service.output:-service.log}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- 文件名称 -->
+                <fileNamePattern>${log.service.output:-service.log}-%d{yyyy-MM-dd}.%i</fileNamePattern>
+                <!-- 文件大小 -->
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			 		<maxFileSize>50MB</maxFileSize>
+				</timeBasedFileNamingAndTriggeringPolicy>
+                <!-- 文件最大保存历史数量 -->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+            
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%date %.-3level ${SERVICE_LOG_PATTERN}%n</pattern>
+            </layout>
+        </appender>
+          
+        <root level="info">
+            <appender-ref ref="TEST-FILE" />
+        </root>
+    </springProfile>
+    
+    <!-- 生产环境. --> 
+    <springProfile name="prod">
+        <!-- 每天产生一个文件 -->
+        <appender name="PROD-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>${log.service.output:-service.log}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- 文件名称 -->
+                <fileNamePattern>${log.service.output:-service.log}-%d{yyyy-MM-dd}.%i</fileNamePattern>
+                <!-- 文件大小 -->
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			 		<maxFileSize>50MB</maxFileSize>
+				</timeBasedFileNamingAndTriggeringPolicy>
+                <!-- 文件最大保存历史数量 -->  
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy> 
+            
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%date %.-3level ${SERVICE_LOG_PATTERN}%n</pattern>
+            </layout>
+        </appender>
+          
+        <root level="info">
+            <appender-ref ref="PROD-FILE" />
+        </root>
+    </springProfile>
+</configuration>

@@ -1,0 +1,75 @@
+server: 
+  port: 9000
+  connection-timeout: 5000
+  context-path: /
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      first:  #数据源1
+        url: jdbc:mysql://172.19.162.40:3306/bottice?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&rewriteBatchedStatements=TRUE
+        username: root
+        password: Botticelli@2018
+      second:  #数据源2
+        url: jdbc:mysql://172.19.162.40:3306/bottice?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&rewriteBatchedStatements=TRUE
+        username: root
+        password: Botticelli@2018
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+
+  data: 
+    mongodb:  
+      uri: mongodb://root:botticelli2018@172.19.162.40:27017/bottice
+      database: bottice
+      authenticationDatabase: bottice
+
+  redis: 
+    #数据库索引  
+    database: 0 
+    host: 172.19.162.40
+    port: 6379
+    password: bottice@2018
+    jedis: 
+      pool: 
+        #最大连接数  
+        max-active: 8  
+        #最大阻塞等待时间(负数表示没限制)  
+        max-wait: -1
+        #最大空闲  
+        max-idle: 8 
+        #最小空闲  
+        min-idle: 0  
+    #连接超时时间  
+    timeout: 10000
+
+app:
+  version:  1.0.1
+
+logging:
+  level:
+    com.ecofresh: ERROR

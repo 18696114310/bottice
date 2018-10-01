@@ -1,0 +1,31 @@
+# dev|test|pro
+spring:
+  profiles:
+    active: dev
+
+  # jackson
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+# Mybatis
+mybatis:
+  type-aliases-package: com.ecofresh.**.entity
+  mapper-locations: classpath*:mapper/**/*.xml
+  config-location: classpath:mybatis.xml
+
+mapper:
+  mappers:
+      - com.ecofresh.core.base.BaseMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+pagination:
+  page: 1
+  rows : 10

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>BOTTICE后台管理系统</title>
+  	<!-- Tell the browser to be responsive to screen width -->
+  	<script src="/common/css.js"></script>
+  	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  	<!--[if lt IE 9]>
+  	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		canvas{z-index:-1;position:absolute;}
+	</style>
+</head>
+<body class="hold-transition login-page" style="overflow:hidden;">
+<div class="login-box" id="rrapp" v-cloak>
+  	<div class="login-logo">
+    	<b>BOTTICE</b>
+  	</div>
+  	<!-- /.login-logo -->
+  	<div class="login-box-body">
+		<p class="login-box-msg">管理员登录</p>
+		<div v-if="error" class="alert alert-danger alert-dismissible">
+			<h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-circle"></i> {{errorMsg}}</h4>
+		</div>
+		<div class="form-group has-feedback">
+			<input type="text" class="form-control" v-model="username" placeholder="账号" style="background:#5cbdaa;border:none;">
+			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+		</div>
+		<div class="form-group has-feedback">
+			<input type="password" class="form-control" v-model="password" placeholder="密码" style="background:#5cbdaa;border:none;">
+			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+		</div>
+		<div class="form-group has-feedback">
+			<input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码" style="background:#5cbdaa;border:none;">
+			<span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
+		</div>
+		<div class="form-group has-feedback">
+			<img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
+	          &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode" style="color:#ffffff;">点击刷新</a>
+		</div>
+	
+		<div class="row">
+			<div class="col-xs-8">
+	          	<div class="checkbox icheck"></div>
+	        </div>
+	        <!-- /.col -->
+	        <div class="col-xs-4">
+	          	<button type="button" class="btn btn-primary btn-block btn-flat" @click="login">登录</button>
+	        </div>
+	        <!-- /.col -->
+	     </div>
+	    <!-- /.social-auth-links -->
+  	</div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+<script src="common/js.js"></script>
+<script type="text/javascript">
+	dynamicLoading.js(rootPath + "libs/particle-ground.js", "utf-8");
+</script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#rrapp',
+        data:{
+            username: '',
+            password: '',
+            captcha: '',
+            error: false,
+            errorMsg: '',
+            src: baseURL + 'captcha'
+        },
+        beforeCreate: function(){
+            if(self != top){
+                top.location.href = self.location.href;
+            }
+        },
+        methods: {
+            refreshCode: function(){
+                this.src = baseURL + "captcha?t=" + $.now();
+            },
+            login: function () {
+                var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sys/login",
+                    data: data,
+                    dataType: "json",
+                    beforeSend: function (xhr) { //发送请求前触发 
+                		xhr.setRequestHeader('token', token);   
+                		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');  
+                	}, 
+                    success: function(r)
+                    {
+                        if(r.code == 0){//登录成功
+                        	if(null != r.token && "undefined" != typeof(r.token))
+                        	{
+                                localStorage.setItem("token", r.token);
+                        	}
+                        	if(null != r.version && "undefined" != typeof(r.version))
+                        	{
+                                localStorage.setItem("vknock", r.version);
+                        	}
+                        	
+                            parent.location.href ='index.html';
+                        }else{
+                            vm.error = true;
+                            vm.errorMsg = r.msg;
+                            vm.refreshCode();
+                        }
+                    }
+                });
+            }
+        }
+    });
+    
+    $(document).ready(function() {
+   	  //粒子背景特效
+   	  	$('body').particleground({
+			dotColor: '#5cbdaa',
+   	    	lineColor: '#5cbdaa'
+   	  	});
+   	});
+</script>
+</body>
+</html>

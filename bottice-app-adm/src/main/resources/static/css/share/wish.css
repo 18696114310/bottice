@@ -1,0 +1,85 @@
+.sendmind{
+	width: 100%;
+	overflow-x: hidden; 
+}
+.sendmind .user_bg{
+	height: 7.6rem;
+	width: 7.5rem;
+	overflow: hidden;
+}
+.sendmind .user_bg img{
+	display: block;
+}
+
+.user_info{
+	position: relative;
+	height: 0.8rem;
+	width: 100%;
+	line-height: 0.4rem;
+}
+.user_info .user_img{
+	width: 0.8rem;
+	height: 0.8rem;
+	position: absolute;
+	left: 0.3rem;
+	top: 0.1rem;
+}
+.user_info .user_img img{
+	display: block;
+	width: 0.8rem;
+	height: 0.8rem;
+	border-radius: 100%;
+	position: relative;
+	top: -0.5rem;
+}
+.user_info .user_nick{
+	width: 100%;
+	box-sizing: content-box;
+	padding: 0 1.5rem 0 1.3rem;
+}
+.user_info .user_nick p{
+	font-size: 0.24rem;
+	color: #333;
+}
+.user_info .user_time{
+	position: absolute;
+	right: 0.3rem;
+	top: 0;
+}
+.user_info .user_time p{
+	font-size: 0.24rem;
+	color: #cfcfcf;
+}
+.share_bottom2{
+	padding: 1rem 0;
+}
+.share_bottom2 .center{
+	position: relative;
+}
+.share_bottom2 .center img{
+	display: block;
+	position: absolute;
+	left: 2rem;
+	width: 1.4rem;
+	height: 1.4rem;
+}
+.share_bottom2 .center{
+	text-align: left;
+}
+.share_bottom2 .center .center_text{
+	width: 100%;
+	padding-left: 3.6rem;
+}
+.share_bottom2 .center .center_text h2{
+	font-size: 0.32rem;
+	line-height: 0.48rem;
+	color: #555;
+	padding-top: 0.2rem;
+	padding-bottom: 0.1rem;
+}
+.share_bottom2 .center .center_text p{
+	font-size: 0.24rem;
+	line-height: 0.3rem;
+	color: #949494;
+}
+

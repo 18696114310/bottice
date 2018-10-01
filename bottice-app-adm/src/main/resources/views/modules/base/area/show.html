@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>区域管理</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/common/css.js"></script>
+</head>
+<body>
+<div id="rrapp" class="content" v-cloak>
+    <div style="padding: 20px 10px" v-show="showList">
+        <div class="grid-btn" style="margin-left: -15px;">
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <span class="input-group-addon">城市名称</span>
+                    <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="城市名称" autocomplete="on">
+                </div>
+            </div>
+
+            <a class="btn btn-default" @click="query">查询</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+
+</div>
+
+<script src="/common/js.js"></script>
+<script src="/common/uploadify.js"></script>
+<script type="text/javascript">
+    dynamicLoading.js(rootPath + "js/modules/base/area/show.js", "utf-8");
+
+</script>
+</body>
+</html>

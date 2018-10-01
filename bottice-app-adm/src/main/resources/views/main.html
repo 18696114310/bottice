@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>BOTTICE欢迎页</title>
+  	<script src="common/css.js"></script>
+</head>
+<body>
+<div class="wrapper content" id="rrapp">
+	<!-- Content Wrapper. Contains page content -->
+	<div class="" style="margin-left: 0px !important;background-color: #ffffff;">
+		<!-- Main content -->
+		<section class="content" style="padding: 0px;">
+            <!-- 任务信息 -->
+            <div style="padding: 0px;">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="fa fa-flag-o"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">总会员数</span>
+                            <span class="info-box-number">{{ dto.count }}</span>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 100%"></div>
+                            </div>
+                            <span class="progress-description">本月新增{{ dto.newCount }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+</div>
+<script src="common/js.js"></script>
+<script type="text/javascript">
+	dynamicLoading.js(rootPath + "plugins/echarts/echarts.common.min.js", "utf-8");
+	dynamicLoading.js(rootPath + "js/main.js", "utf-8");
+</script>
+</body>
+</html>

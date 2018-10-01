@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 
+	<parent>
+        <groupId>com.bottice</groupId>
+        <artifactId>bottice-app</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>bottice-app-user</artifactId>
+    <packaging>jar</packaging>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+		<fresh.version>1.0.0.RELEASE</fresh.version>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.fresh</groupId>
+            <artifactId>fresh-core</artifactId>
+        	<version>${fresh.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.fresh</groupId>
+            <artifactId>fresh-oss</artifactId>
+        	<version>${fresh.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.fresh</groupId>
+            <artifactId>fresh-sms</artifactId>
+        	<version>${fresh.version}</version>
+        </dependency>
+        
+    </dependencies>
+    
+	<build>
+		<finalName>bottice-app-user</finalName>
+        <plugins>
+            <plugin>  
+			    <groupId>org.apache.maven.plugins</groupId>  
+			    <artifactId>maven-compiler-plugin</artifactId>  
+			    <version>3.6.1</version><!--$NO-MVN-MAN-VER$-->
+			    <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+			        <verbose>true</verbose>  
+			        <fork>true</fork>  
+			    </configuration>  
+			</plugin>
+		</plugins>
+	</build>
+</project>
